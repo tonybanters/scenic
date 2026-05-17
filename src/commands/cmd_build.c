@@ -19,10 +19,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "all.h"
 #include "arena.h"
 #include "build.h"
 #include "logging.h"
+#include "scenicos.h"
 
 int cmd_build(RuntimeOpts *options, int argc, char **argv)
 {
@@ -41,9 +41,10 @@ int cmd_build(RuntimeOpts *options, int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    for (size_t i = 0; i < PKGS_REGISTRY_LEN; i++) {
-        if (!strcmp(PKGS_REGISTRY[i]->name, argv[1])) {
-            build_pkg_from_def(a, PKGS_REGISTRY[i]);
+    pkg_refs all = pkgs_all();
+    for (size_t i = 0; i < all.len; i++) {
+         if (!strcmp(all.data[i]->name, argv[1])) {
+            build_pkg_from_def(a, all.data[i]);
             arena_destroy(a);
             return EXIT_SUCCESS;
         }

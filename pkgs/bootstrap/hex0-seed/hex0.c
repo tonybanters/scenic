@@ -13,7 +13,7 @@
    The GNU General Public License is contained in the file LICENSE.
 */
 
-#include "hex0.h"
+#include "scenicos.h"
 
 const pkg pkgs_hex0 = {
     .name = "hex0-seed",
@@ -21,3 +21,4 @@ const pkg pkgs_hex0 = {
     .src = "https://github.com/oriansj/bootstrap-seeds/archive/779e0105b6ea7a8f6d860cdcd7853ec33481fa5b.tar.gz",
     .sha256 = "5c0b88037a78beecc29293bfdf9a3e37d29ab4ab33a5b4f5771f0ab802257a81",
 };
+PKG_REGISTER(pkgs_hex0);

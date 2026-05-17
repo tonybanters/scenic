@@ -13,7 +13,7 @@
    The GNU General Public License is contained in the file LICENSE.
 */
 
-#include "glibc.h"
+#include "scenicos.h"
 
 const pkg pkgs_glibc = {
     .name        = "glibc",
@@ -24,3 +24,4 @@ const pkg pkgs_glibc = {
     .build_flags = "",
     .build_sys   = BUILD_AUTOTOOLS,
 };
+PKG_REGISTER(pkgs_glibc);

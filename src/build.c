@@ -27,8 +27,6 @@
 #include "sandbox.h"
 #include "store.h"
 
-#include "all.h"
-
 #ifdef USE_LOCAL_DIRS
     #define WORK_ROOT ".scn-runtime/work"
 #else
@@ -147,12 +145,7 @@ realize_error build_pkg(
 bool build_pkg_from_def(arena *a, const pkg *def)
 {
     resolved_list resolved_pkgs;
-    system_cfg cfg = {
-      .pkgs = {
-        .data = PKGS_REGISTRY,
-        .len = PKGS_REGISTRY_LEN
-      }
-    };
+    system_cfg cfg = { .pkgs = pkgs_all() };
 
     resolve_error rerr = resolve(a, &cfg, &resolved_pkgs);
     if (rerr.kind != RESOLVE_OK) {

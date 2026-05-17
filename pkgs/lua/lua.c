@@ -13,8 +13,9 @@
    The GNU General Public License is contained in the file LICENSE.
 */
 
-#include "lua.h"
-#include "../glibc/glibc.h"
+#include "scenicos.h"
+
+extern const pkg pkgs_glibc;
 
 static const pkg *const lua_deps[] = { &pkgs_glibc };
 
@@ -27,3 +28,4 @@ const pkg pkgs_lua = {
     .build_flags = "",
     .build_sys   = BUILD_MAKE,
 };
+PKG_REGISTER(pkgs_lua);

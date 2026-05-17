@@ -1,4 +1,6 @@
 *.o
+.envrc
+.direnv/
 .clangd
 .cache/
 build/

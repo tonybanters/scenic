@@ -13,9 +13,10 @@
    The GNU General Public License is contained in the file LICENSE.
 */
 
-#include "neovim.h"
-#include "../glibc/glibc.h"
-#include "../lua/lua.h"
+#include "scenicos.h"
+
+extern const pkg pkgs_glibc;
+extern const pkg pkgs_lua;
 
 static const pkg *const neovim_deps[] = {
     &pkgs_glibc,
@@ -32,3 +33,4 @@ const pkg pkgs_neovim = {
     .build_flags = "",
     .build_sys   = BUILD_CMAKE,
 };
+PKG_REGISTER(pkgs_neovim);
