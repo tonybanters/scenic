@@ -44,8 +44,8 @@ typedef enum {
 typedef struct {
     fetch_error_kind kind;
     const char      *url;
-    const char      *expected_sha;
-    const char      *actual_sha;
+    char      expected_sha[65];
+    char      actual_sha[65];
     int              errno_val;
 } fetch_error;
 

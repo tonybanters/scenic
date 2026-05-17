@@ -20,6 +20,7 @@
 
 #include <curl/curl.h>
 #include <curl/easy.h>
+#include <unistd.h>
 
 #include "hash.h"
 
@@ -76,9 +77,16 @@ out:
  * Return: FETCH_OK_VAL on success, a tagged error otherwise.
  */
 fetch_error fetch(const pkg *p, const char *dest_path) {
-    // TODO: replace this with execvpe or libcurl
-    CURLcode status = download_package_source(p->src, dest_path);
+    char actual[65] = {0};
+    fetch_error err = {0};
 
+    if (
+        access(dest_path, F_OK) == 0
+        && sha256_verify_file(dest_path, p->sha256, actual)
+    )
+        return FETCH_OK_VAL;
+
+    CURLcode status = download_package_source(p->src, dest_path);
     if (status != CURLE_OK) {
         return (fetch_error){
             .kind = FETCH_E_IO,
@@ -87,14 +95,12 @@ fetch_error fetch(const pkg *p, const char *dest_path) {
         };
     }
 
-    char actual[65] = {0};
     if (!sha256_verify_file(dest_path, p->sha256, actual)) {
-        return (fetch_error){
-            .kind = FETCH_E_HASH_MISMATCH,
-            .url = p->src,
-            .expected_sha = p->sha256,
-            .actual_sha = strdup(actual),
-        };
+        memcpy(err.actual_sha, actual, sizeof(actual));
+        memcpy(err.expected_sha, p->sha256, sizeof(actual));
+        err.kind = FETCH_E_HASH_MISMATCH;
+        err.url = p->src;
+        return err;
     }
 
     return FETCH_OK_VAL;
