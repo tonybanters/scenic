@@ -44,11 +44,13 @@ int cmd_build(RuntimeOpts *options, int argc, char **argv)
     for (size_t i = 0; i < PKGS_REGISTRY_LEN; i++) {
         if (!strcmp(PKGS_REGISTRY[i]->name, argv[1])) {
             build_pkg_from_def(a, PKGS_REGISTRY[i]);
+            arena_destroy(a);
             return EXIT_SUCCESS;
         }
     }
     logf(&options->logger, LOG_ERROR, "build",
         "no package named [%s] to build.", argv[1]);
+    arena_destroy(a);
     return EXIT_FAILURE;
 }
 
