@@ -50,9 +50,6 @@ SRC_FILES := $(shell find src -name '*.c')
 PKG_FILES := $(shell find pkgs -name '*.c')
 CONFIG_FILE ?= etc-example/config.c
 
-REGISTRY := pkgs/all.c
-REGISTRY_HEADER := $(REGISTRY:.c=.h)
-
 ALL_SRCS  = $(SRC_FILES) $(PKG_FILES) $(CONFIG_FILE)
 OBJ_FILES = $(patsubst %.c,$(BUILD_DIR)/%.o,$(ALL_SRCS))
 DEP_FILES = $(OBJ_FILES:.o=.d)
@@ -60,7 +57,7 @@ DEP_FILES = $(OBJ_FILES:.o=.d)
 
 RM ?= rm --force
 
-.PHONY: all clean registry switch
+.PHONY: all clean switch
 
 .NOTPARALLEL: all
 all: $(REGISTRY) $(BIN)
@@ -74,12 +71,6 @@ $(BUILD_DIR)/%.o: %.c
 
 -include $(DEP_FILES)
 
-$(REGISTRY) $(REGISTRY_HEADER):
-	./tools/gen-registry.sh
-
-.PHONY: registry
-registry: $(REGISTRY)
-
 .PHONY: clean
 clean:
 	rm -rf .build
@@ -87,7 +78,6 @@ clean:
 .PHONY: fclean
 fclean: clean
 	$(RM) scn
-	$(RM) $(REGISTRY) $(REGISTRY_HEADER)
 
 .NOTPARALLEL: re
 .PHONY: re

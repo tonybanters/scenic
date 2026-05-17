@@ -13,8 +13,9 @@
    The GNU General Public License is contained in the file LICENSE.
 */
 
-#include "dash.h"
-#include "../glibc/glibc.h"
+#include "scenicos.h"
+
+extern const pkg pkgs_glibc;
 
 static const pkg *const dash_deps[] = { &pkgs_glibc };
 
@@ -27,3 +28,4 @@ const pkg pkgs_dash = {
     .build_flags = "",
     .build_sys   = BUILD_AUTOTOOLS,
 };
+PKG_REGISTER(pkgs_dash);

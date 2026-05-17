@@ -16,12 +16,12 @@
 /* /etc/scn/config.c */
 #include "scenicos.h"
 
-#include "dash/dash.h"
-#include "firefox/firefox.h"
-#include "glibc/glibc.h"
-#include "linux/linux.h"
-#include "neovim/neovim.h"
-#include "oxwm/oxwm.h"
+extern const pkg pkgs_dash;
+extern const pkg pkgs_firefox;
+extern const pkg pkgs_glibc;
+extern const pkg pkgs_linux;
+extern const pkg pkgs_neovim;
+extern const pkg pkgs_oxwm;
 
 static const pkg *const my_pkgs[] = {
     &pkgs_glibc,

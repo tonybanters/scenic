@@ -55,6 +55,21 @@ struct pkg {
     build_system build_sys;
 };
 
+/* each pkg.c registers itself, the linker gathers entires into pkgs_registry */
+#define PKG_REGISTER(p) \
+    static const pkg *const _reg_##p \
+        __attribute__((used, section("pkgs_registry"))) = &(p)
+
+extern const pkg *const __start_pkgs_registry[];
+extern const pkg *const __stop_pkgs_registry[];
+
+static inline pkg_refs pkgs_all(void) {
+    return (pkg_refs){
+        .data = __start_pkgs_registry,
+        .len  = (size_t)(__stop_pkgs_registry - __start_pkgs_registry),
+    };
+}
+
 typedef struct {
     const char *name;
     bool        enabled;

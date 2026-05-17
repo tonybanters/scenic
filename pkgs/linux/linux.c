@@ -13,7 +13,7 @@
    The GNU General Public License is contained in the file LICENSE.
 */
 
-#include "linux.h"
+#include "scenicos.h"
 
 const pkg pkgs_linux = {
     .name        = "linux",
@@ -24,3 +24,4 @@ const pkg pkgs_linux = {
     .build_flags = "",
     .build_sys   = BUILD_MAKE,
 };
+PKG_REGISTER(pkgs_linux);
